@@ -1,0 +1,37 @@
+
+def tsp_nearest_neighbor(matrix):
+    num_cities = len(matrix)
+    visited = [False] * num_cities
+    route = [0]  # Başlangıç şehri olarak 0. şehri seçiyoruz
+    visited[0] = True
+
+    current_city = 0
+    while len(route) < num_cities:
+        nearest_neighbor = None
+        nearest_distance = float('inf')
+        for neighbor_city in range(num_cities):
+            if not visited[neighbor_city] and matrix[current_city][neighbor_city] < nearest_distance:
+                nearest_neighbor = neighbor_city
+                nearest_distance = matrix[current_city][neighbor_city]
+        route.append(nearest_neighbor)
+        visited[nearest_neighbor] = True
+        current_city = nearest_neighbor
+
+    route.append(0)  # Son şehirden başlangıç şehrine geri dönüyoruz
+
+    return route
+
+# TSP örneği için mesafe matrisini oluşturuyoruz
+# Örnek olarak 4 şehirli bir TSP kullandık
+distance_matrix = [
+    [0, 20, 12, 5, 18, 22],
+    [20, 0, 15, 10, 8, 12],
+    [12, 15, 0, 6, 11, 14],
+    [5, 10, 6, 0, 25, 20],
+    [18, 8, 11, 25, 0, 16],
+    [22, 12, 14, 20, 16, 0]
+    ]
+
+optimal_route = tsp_nearest_neighbor(distance_matrix)
+print ("cities", distance_matrix)
+print("Optimal route: ", optimal_route)
